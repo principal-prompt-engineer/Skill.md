@@ -15,6 +15,7 @@ Use this whenever more than 3 people share one computer. Reference implementatio
 | select / confirm / jump | button 1 ("A") | Enter, Space |
 | back / delete | button 0 ("B"), Back (8) | Backspace, Esc |
 | menu (Settings in lobby, pause in race) | Start (9) | Tab (lobby), Esc (race) |
+| host menu (lobby, host only) | top face button (X on Nintendo-layout pads, Y on Xbox-layout pads; label it to match the controllers in use) | H |
 | up / down / left / right | D-pad (12 to 15), left stick | arrows (and WASD in a race) |
 
 - Every screen asks for logical actions (`select`, `back`, `menu`, directions, `any`). Hints, help tables and on-screen labels are generated from the same table, so they can never disagree with behaviour. Changing the mapping (for example swapping A and B) is a one-line edit.
@@ -77,6 +78,20 @@ Each card shows three progress dots (name, level, ready), the current step and a
 ## 12. Settings page
 Use a category rail plus a scrolling panel: Gameplay, Players (level explanations, saved players), Controls (table generated from the mapping in section 1), Controllers, Appearance, About. It must be fully usable with a gamepad (up/down move, left/right adjust sliders and selects, select activates, back or menu closes).
 
+## 13. Host and game modes
+- The host is the joined player with the lowest controller number (the keyboard counts last). The host stays the same between rounds. If the host leaves, the next lowest controller becomes host automatically. The host can pass the role to someone else from the host menu.
+- The host menu opens with its own dedicated button and is shown **inside the host's own card**, replacing that card's normal controls while it is open. Do not add a separate panel above the cards, because it pushes the other players' cards off-screen. Rows: game mode, role assignment (for example who plays the yeti), remove a player, pass host, close. Left/right changes a value, select confirms an action, back closes.
+- Only the host's input reaches the host menu (other players keep setting themselves up). Pause the auto-start while it is open, and show a short message in the lobby ("The host is choosing the game mode...").
+- Every player can leave by stepping back from the first setup step (back, back, back from READY). The host can also remove anyone from the host menu. A removed player simply presses a button to join again.
+- A mode that needs a minimum number of players (for example Yeti hunter needs 2) blocks auto-start and says why.
+
+## 14. Fit: five players without scrolling
+- The lobby must show five player cards without scrolling at 1920x1000 and 1280x720: compact title, a one-line mode and host bar, one responsive grid row with up to five columns, small paddings. Only the temporary typing card may take a full row.
+- When something needs extra room (host menu, name typing), change what a card shows instead of adding panels. Test with five players, a typing card and the host menu open.
+
+## 15. Direction arrows for off-screen targets
+When a pane can show something that is out of view (the next slalom gate, other players for the human yeti), draw an arrow clamped to the pane edge, pointing at the target, with a short label (gate distance or the player's name) in the target's colour. Draw nothing while the target is on screen.
+
 ## Checklist
 - [ ] One mapping table; hints and help generated from it
 - [ ] Explicit input contexts; lobby buttons exclusive; context-change frame consumed
@@ -90,3 +105,6 @@ Use a category rail plus a scrolling panel: Gameplay, Players (level explanation
 - [ ] Pause and settings show who opened them, and only that device controls them
 - [ ] Disconnect pauses; animations finish before results
 - [ ] Per-level leaderboards and saved-player stats
+- [ ] Host rules, host menu inside the host's card, players can leave and be removed
+- [ ] Five player cards fit without scrolling
+- [ ] Arrows for off-screen targets
